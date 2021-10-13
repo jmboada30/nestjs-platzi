@@ -1,0 +1,32 @@
+@APP_URL = {{$dotenv APP_URL}}
+@contentType = application/json
+@feature = customers
+
+### getAll
+GET {{APP_URL}}/{{feature}} HTTP/1.1
+
+### getOne
+GET {{APP_URL}}/{{feature}}/1 HTTP/1.1
+
+### Create
+POST {{APP_URL}}/{{feature}} HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "name": "Josue",
+    "lastName": "Boada",
+    "phone": "321654987"
+}
+
+### Update
+PUT {{APP_URL}}/{{feature}}/2 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "name": "Kaomi",
+    "lastName": "Boada",
+    "phone": "321654987"
+}
+
+### delete
+DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1

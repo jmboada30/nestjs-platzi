@@ -1,12 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private appSvc: AppService) {}
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.appSvc.getHello();
+  }
+
+  @Get('/ruta/')
+  getText(): string {
+    return 'Nest no le presta atencion a los / a menos que tengan parametros';
   }
 }

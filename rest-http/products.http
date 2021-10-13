@@ -1,0 +1,36 @@
+@APP_URL = {{$dotenv APP_URL}}
+@contentType = application/json
+@feature = products
+
+### getAll
+GET {{APP_URL}}/{{feature}} HTTP/1.1
+
+### getOne
+GET {{APP_URL}}/{{feature}}/1 HTTP/1.1
+
+### Create
+POST {{APP_URL}}/{{feature}} HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "name": "Product 1",
+    "description": "Description product 1",
+    "price": 100,
+    "image": "pagina.com",
+    "stock": 2
+}
+
+### Update
+PUT {{APP_URL}}/{{feature}}/2 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "name": "Product 2",
+    "description": "Description product 2 updated",
+    "price": 40,
+    "image": "pagina.com/foto.png",
+    "stock": 200
+}
+
+### delete
+DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1
