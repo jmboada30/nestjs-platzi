@@ -1,0 +1,28 @@
+@APP_URL = {{$dotenv APP_URL}}
+@contentType = application/json
+@feature = categories
+
+### getAll
+GET {{APP_URL}}/{{feature}} HTTP/1.1
+
+### getOne
+GET {{APP_URL}}/{{feature}}/1 HTTP/1.1
+
+### Create
+POST {{APP_URL}}/{{feature}} HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "name": "Name 3"
+}
+
+### Update
+PUT {{APP_URL}}/{{feature}}/2 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "name": "Product 2"
+}
+
+### delete
+DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1

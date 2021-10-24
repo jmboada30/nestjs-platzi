@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=my_db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=root@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - "5050:80"
+
+# 1. para entrar al bash del serv en docker usar:
+# docker-compose exec postgres bash
+
+# 2. para entrar a postgres por terminal
+# psql -h localhost -d my_db -U root
+
+# 3. verificar las bases de datos
+#  \d+
+
+# 4. Salir de postgres
+# \q
