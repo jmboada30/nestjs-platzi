@@ -8,7 +8,6 @@ import { ConfigService } from '@nestjs/config';
 import { Client } from 'pg';
 
 import { User } from '../entities/user.entity';
-import { Order } from '../entities/order.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 import { ProductsService } from './../../products/services/products.service';
@@ -20,7 +19,6 @@ export class UsersService {
   constructor(
     private productsService: ProductsService,
     private configService: ConfigService,
-    @Inject('PG') private clientPg: Client,
     @InjectRepository(User) private repository: Repository<User>,
   ) {}
 
@@ -65,14 +63,5 @@ export class UsersService {
       user,
       products: await this.productsService.findAll(),
     };
-  }
-
-  async getTasks() {
-    try {
-      const { rows } = await this.clientPg.query('SELECT * FROM tasks;');
-      return rows;
-    } catch (error) {
-      return error;
-    }
   }
 }
