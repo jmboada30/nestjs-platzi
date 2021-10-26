@@ -1,12 +1,9 @@
 @APP_URL = {{$dotenv APP_URL}}
 @contentType = application/json
-@feature = users
+@feature = tasks
 
 ### getAll
 GET {{APP_URL}}/{{feature}} HTTP/1.1
-
-### getAllTasks
-GET {{APP_URL}}/{{feature}}/tasks HTTP/1.1
 
 ### getOne
 GET {{APP_URL}}/{{feature}}/1 HTTP/1.1
