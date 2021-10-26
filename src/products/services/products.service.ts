@@ -1,60 +1,51 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  MethodNotAllowedException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Product } from './../entities/product.entity';
 import { CreateProductDto, UpdateProductDto } from './../dtos/products.dtos';
 
 @Injectable()
 export class ProductsService {
-  private counterId = 1;
-  private products: Product[] = [
-    {
-      id: 1,
-      name: 'Producto 1',
-      description: 'lorem lorem',
-      price: 10000,
-      stock: 300,
-      image: 'https://i.imgur.com/U4iGx1j.jpeg',
-    },
-  ];
+  constructor(
+    @InjectRepository(Product) private repository: Repository<Product>,
+  ) {}
 
-  findAll() {
-    return this.products;
+  async findAll() {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    const product = this.products.find((item) => item.id === id);
-    if (!product) {
-      throw new NotFoundException(`Product #${id} not found`);
+  async findOne(id: number) {
+    const found = await this.repository.findOne(id);
+    if (!found) throw new NotFoundException(`Product #${id} not found`);
+    return found;
+  }
+
+  async create(data: CreateProductDto) {
+    try {
+      const created = this.repository.create(data);
+      return await this.repository.save(created);
+    } catch (error) {
+      throw new MethodNotAllowedException(error.message);
     }
-    return product;
   }
 
-  create(data: CreateProductDto) {
-    this.counterId = this.counterId + 1;
-    const newProduct = {
-      id: this.counterId,
-      ...data,
-    };
-    this.products.push(newProduct);
-    return newProduct;
-  }
-
-  update(id: number, changes: UpdateProductDto) {
-    const product = this.findOne(id);
-    const index = this.products.findIndex((item) => item.id === id);
-    this.products[index] = {
-      ...product,
-      ...changes,
-    };
-    return this.products[index];
-  }
-
-  remove(id: number) {
-    const index = this.products.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`Product #${id} not found`);
+  async update(id: number, changes: UpdateProductDto) {
+    const found = await this.findOne(id);
+    try {
+      this.repository.merge(found, changes);
+      return await this.repository.save(found);
+    } catch (error) {
+      throw new MethodNotAllowedException(error.message);
     }
-    this.products.splice(index, 1);
-    return true;
+  }
+
+  async remove(id: number) {
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 }

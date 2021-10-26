@@ -13,8 +13,8 @@ POST {{APP_URL}}/{{feature}} HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "name": "Name 3",
-    "image": "page2.com"
+    "name": "Name 1",
+    "image": "page.com"
 }
 
 ### Update
@@ -26,4 +26,4 @@ Content-Type: {{contentType}}
 }
 
 ### delete
-DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1
+DELETE {{APP_URL}}/{{feature}}/2 HTTP/1.1

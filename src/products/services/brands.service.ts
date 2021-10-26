@@ -1,57 +1,49 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  MethodNotAllowedException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Brand } from '../entities/brand.entity';
 import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dtos';
 
 @Injectable()
 export class BrandsService {
-  private counterId = 1;
-  private brands: Brand[] = [
-    {
-      id: 1,
-      name: 'Brand 1',
-      image: 'https://i.imgur.com/U4iGx1j.jpeg',
-    },
-  ];
+  constructor(@InjectRepository(Brand) private repository: Repository<Brand>) {}
 
-  findAll() {
-    return this.brands;
+  async findAll() {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    const product = this.brands.find((item) => item.id === id);
-    if (!product) {
-      throw new NotFoundException(`Brand #${id} not found`);
+  async findOne(id: number) {
+    const found = await this.repository.findOne(id);
+    if (!found) throw new NotFoundException(`Product #${id} not found`);
+    return found;
+  }
+
+  async create(data: CreateBrandDto) {
+    try {
+      const created = this.repository.create(data);
+      return await this.repository.save(created);
+    } catch (error) {
+      throw new MethodNotAllowedException(error.message);
     }
-    return product;
   }
 
-  create(data: CreateBrandDto) {
-    this.counterId = this.counterId + 1;
-    const newBrand = {
-      id: this.counterId,
-      ...data,
-    };
-    this.brands.push(newBrand);
-    return newBrand;
-  }
-
-  update(id: number, changes: UpdateBrandDto) {
-    const brand = this.findOne(id);
-    const index = this.brands.findIndex((item) => item.id === id);
-    this.brands[index] = {
-      ...brand,
-      ...changes,
-    };
-    return this.brands[index];
-  }
-
-  remove(id: number) {
-    const index = this.brands.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`Brand #${id} not found`);
+  async update(id: number, changes: UpdateBrandDto) {
+    const found = await this.findOne(id);
+    try {
+      this.repository.merge(found, changes);
+      return await this.repository.save(found);
+    } catch (error) {
+      throw new MethodNotAllowedException(error.message);
     }
-    this.brands.splice(index, 1);
-    return true;
+  }
+
+  async remove(id: number) {
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 }

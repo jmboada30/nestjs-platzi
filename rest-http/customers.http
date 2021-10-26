@@ -15,11 +15,11 @@ Content-Type: {{contentType}}
 {
     "name": "Josue",
     "lastName": "Boada",
-    "phone": "321654987"
+    "phone": "123654987"
 }
 
 ### Update
-PUT {{APP_URL}}/{{feature}}/2 HTTP/1.1
+PUT {{APP_URL}}/{{feature}}/1 HTTP/1.1
 Content-Type: {{contentType}}
 
 {

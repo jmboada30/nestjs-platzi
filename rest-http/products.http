@@ -13,7 +13,7 @@ POST {{APP_URL}}/{{feature}} HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "name": "Product 1",
+    "name": "Product 33",
     "description": "Description product 1",
     "price": 100,
     "image": "pagina.com",
@@ -21,16 +21,16 @@ Content-Type: {{contentType}}
 }
 
 ### Update
-PUT {{APP_URL}}/{{feature}}/2 HTTP/1.1
+PUT {{APP_URL}}/{{feature}}/14 HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "name": "Product 2",
-    "description": "Description product 2 updated",
+    "name": "Product 10",
+    "description": "Description product 10 updated",
     "price": 40,
     "image": "pagina.com/foto.png",
     "stock": 200
 }
 
 ### delete
-DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1
+DELETE {{APP_URL}}/{{feature}}/2233 HTTP/1.1

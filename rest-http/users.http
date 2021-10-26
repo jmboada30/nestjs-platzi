@@ -16,21 +16,21 @@ POST {{APP_URL}}/{{feature}} HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "email": "mail2@mail.com",
-    "password": "1212",
+    "email": "mail4@mail.com",
+    "password": "121212",
     "role": "admin"
 }
 
 ### Update
-PUT {{APP_URL}}/{{feature}}/2 HTTP/1.1
+PUT {{APP_URL}}/{{feature}}/1 HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "password": "12122"
+    "password": "121222"
 }
 
 ### delete
-DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1
+DELETE {{APP_URL}}/{{feature}}/2 HTTP/1.1
 
 ### getOrders
 GET {{APP_URL}}/{{feature}}/1/orders HTTP/1.1
