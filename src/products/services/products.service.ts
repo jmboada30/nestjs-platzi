@@ -6,45 +6,66 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Product } from './../entities/product.entity';
 import { CreateProductDto, UpdateProductDto } from './../dtos/products.dtos';
-import { BrandsService } from './brands.service';
+import { Product } from './../entities/product.entity';
+import { Category } from '../entities/category.entity';
+import { Brand } from '../entities/brand.entity';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectRepository(Product) private repository: Repository<Product>,
-    private brandsSvc: BrandsService,
+    @InjectRepository(Product) private productRepo: Repository<Product>,
+    @InjectRepository(Category) private categoryRepo: Repository<Category>,
+    @InjectRepository(Brand) private brandRepo: Repository<Brand>,
   ) {}
 
   async findAll() {
-    return await this.repository.find({ relations: ['brand'] });
+    return await this.productRepo.find();
   }
 
+  // cuando usamos este metodo lo hacemos para buscar los detalle de un producto en especifico.
+  // no es recomendable sobrecargar el metodo findAll.
   async findOne(id: number) {
-    const found = await this.repository.findOne(id);
+    const found = await this.productRepo.findOne(id, {
+      relations: ['brand', 'categories'],
+    });
     if (!found) throw new NotFoundException(`Product #${id} not found`);
     return found;
   }
 
   async create(data: CreateProductDto) {
     try {
-      const created = this.repository.create(data);
-      created.brand = await this.brandsSvc.findOne(data.brandId);
-      return await this.repository.save(created);
+      const newProduct = this.productRepo.create(data);
+      if (data.brandId) {
+        newProduct.brand = await this.brandRepo.findOne(data.brandId);
+      }
+
+      if (data.categoriesIds) {
+        newProduct.categories = await this.categoryRepo.findByIds(
+          data.categoriesIds,
+        );
+      }
+      return await this.productRepo.save(newProduct);
     } catch (error) {
       throw new MethodNotAllowedException(error.message);
     }
   }
 
   async update(id: number, changes: UpdateProductDto) {
-    const found = await this.findOne(id);
+    const product = await this.findOne(id);
     try {
       if (changes.brandId) {
-        found.brand = await this.brandsSvc.findOne(changes.brandId);
+        product.brand = await this.brandRepo.findOne(changes.brandId);
       }
-      this.repository.merge(found, changes);
-      return await this.repository.save(found);
+
+      if (changes.categoriesIds) {
+        product.categories = await this.categoryRepo.findByIds(
+          changes.categoriesIds,
+        );
+      }
+
+      this.productRepo.merge(product, changes);
+      return await this.productRepo.save(product);
     } catch (error) {
       throw new MethodNotAllowedException(error.message);
     }
@@ -52,6 +73,6 @@ export class ProductsService {
 
   async remove(id: number) {
     await this.findOne(id);
-    return await this.repository.delete(id);
+    return await this.productRepo.delete(id);
   }
 }

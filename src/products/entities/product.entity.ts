@@ -1,7 +1,15 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { BaseDate } from '../../common/entities/base-date.entity';
 import { Brand } from './brand.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Product extends BaseDate {
@@ -25,4 +33,8 @@ export class Product extends BaseDate {
 
   @ManyToOne(() => Brand, (brand) => brand.products) //<- la relacion va en la entidad debil.
   brand: Brand;
+
+  @ManyToMany(() => Category, (category) => category.products)
+  @JoinTable()
+  categories: Category[];
 }
