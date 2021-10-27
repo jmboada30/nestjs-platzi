@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { BaseDate } from '../../common/entities/base-date.entity';
+import { Brand } from './brand.entity';
 
 @Entity()
 export class Product extends BaseDate {
@@ -21,4 +22,7 @@ export class Product extends BaseDate {
 
   @Column({ type: 'varchar' })
   image: string;
+
+  @ManyToOne(() => Brand, (brand) => brand.products) //<- la relacion va en la entidad debil.
+  brand: Brand;
 }

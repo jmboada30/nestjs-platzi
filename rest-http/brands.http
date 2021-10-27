@@ -13,7 +13,7 @@ POST {{APP_URL}}/{{feature}} HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "name": "Name 1",
+    "name": "Brand 2",
     "image": "page.com"
 }
 
