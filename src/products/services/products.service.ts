@@ -72,7 +72,41 @@ export class ProductsService {
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    await this.productRepo.findOneOrFail(id);
     return await this.productRepo.delete(id);
+  }
+
+  async addCategoryToProduct(productId: number, categoryId: number) {
+    try {
+      const product = await this.productRepo.findOneOrFail(productId, {
+        relations: ['categories'],
+      });
+
+      const category = await this.categoryRepo.findOneOrFail(categoryId);
+
+      const idx = product.categories.findIndex(
+        (item) => item.id === category.id,
+      );
+
+      idx === -1 ? product.categories.push(category) : '';
+
+      return await this.productRepo.save(product);
+    } catch (error) {
+      throw new MethodNotAllowedException(error.message);
+    }
+  }
+
+  async removeCategoryByProduct(productId: number, categoryId: number) {
+    try {
+      const product = await this.productRepo.findOneOrFail(productId, {
+        relations: ['categories'],
+      });
+      product.categories = product.categories.filter(
+        (item) => item.id !== categoryId,
+      );
+      return await this.productRepo.save(product);
+    } catch (error) {
+      throw new MethodNotAllowedException(error.message);
+    }
   }
 }

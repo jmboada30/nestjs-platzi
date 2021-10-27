@@ -34,5 +34,11 @@ Content-Type: {{contentType}}
     "stock": 200
 }
 
+### Add category by Product
+PUT {{APP_URL}}/{{feature}}/2/category/1 HTTP/1.1
+
 ### delete
 DELETE {{APP_URL}}/{{feature}}/1 HTTP/1.1
+
+### delete category by Product
+DELETE {{APP_URL}}/{{feature}}/2/category/1 HTTP/1.1
