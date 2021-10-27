@@ -1,7 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseDate } from '../../common/entities/base-date.entity';
+import { User } from './user.entity';
 
 @Entity()
-export class Customer {
+export class Customer extends BaseDate {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,4 +15,7 @@ export class Customer {
 
   @Column({ type: 'varchar' })
   phone: string;
+
+  @OneToOne(() => User, (user) => user.customer, { nullable: true })
+  user: User;
 }

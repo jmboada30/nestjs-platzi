@@ -21,7 +21,7 @@ Content-Type: {{contentType}}
 }
 
 ### Update
-PUT {{APP_URL}}/{{feature}}/14 HTTP/1.1
+PUT {{APP_URL}}/{{feature}}/1 HTTP/1.1
 Content-Type: {{contentType}}
 
 {

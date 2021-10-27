@@ -18,7 +18,7 @@ const API_KEY_PROD = 'PROD1212121SA';
           ...mysql,
           username: user,
           autoLoadEntities: true,
-          synchronize: true,
+          synchronize: false,
         };
       },
     }),

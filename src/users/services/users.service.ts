@@ -4,8 +4,6 @@ import {
   Inject,
   MethodNotAllowedException,
 } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Client } from 'pg';
 
 import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
@@ -13,17 +11,18 @@ import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 import { ProductsService } from './../../products/services/products.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CustomersService } from './customers.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private productsService: ProductsService,
-    private configService: ConfigService,
     @InjectRepository(User) private repository: Repository<User>,
+    private customerSvc: CustomersService,
   ) {}
 
   async findAll() {
-    return await this.repository.find();
+    return await this.repository.find({ relations: ['customer'] });
   }
 
   async findOne(id: number) {
@@ -35,6 +34,12 @@ export class UsersService {
   async create(data: CreateUserDto) {
     try {
       const created = this.repository.create(data);
+
+      if (data.customerId) {
+        const customer = await this.customerSvc.findOne(data.customerId);
+        created.customer = customer;
+      }
+
       return await this.repository.save(created);
     } catch (error) {
       throw new MethodNotAllowedException(error.message);

@@ -1,7 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+import { BaseDate } from '../../common/entities/base-date.entity';
+
 @Entity()
-export class Product {
+export class Product extends BaseDate {
   @PrimaryGeneratedColumn()
   id: number;
 
