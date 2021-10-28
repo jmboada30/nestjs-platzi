@@ -1,8 +1,25 @@
-import { User } from './user.entity';
-import { Product } from './../../products/entities/product.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Customer } from './customer.entity';
+import { BaseDate } from '../../common/entities/base-date.entity';
+import { OrderItem } from './order-item.entity';
 
-export class Order {
+@Entity()
+export class Order extends BaseDate {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({ type: 'datetime' })
   date: Date;
-  user: User;
-  products: Product[];
+
+  @ManyToOne(() => Customer, (customer) => customer.orders)
+  customer: Customer;
+
+  @OneToMany(() => OrderItem, (items) => items.order)
+  items: OrderItem[];
 }
