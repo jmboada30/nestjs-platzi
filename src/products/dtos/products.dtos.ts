@@ -5,9 +5,12 @@ import {
   IsNotEmpty,
   IsPositive,
   IsArray,
+  IsOptional,
+  Min,
 } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 import { Category } from '../entities/category.entity';
+import { BaseFilterDto } from '../../common/dtos/paginates.dto';
 
 export class CreateProductDto {
   @IsString()
@@ -49,3 +52,5 @@ export class CreateProductDto {
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
+
+export class FilterProductsDto extends BaseFilterDto {}

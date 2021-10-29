@@ -11,24 +11,26 @@ import {
 
 import { CategoriesService } from '../services/categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './../dtos/category.dtos';
+import { Query } from '@nestjs/common';
+import { FilterCategoriesDto } from '../dtos/category.dtos';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private categoriesService: CategoriesService) {}
+  constructor(private categoriesSvc: CategoriesService) {}
 
   @Get()
-  findAll() {
-    return this.categoriesService.findAll();
+  findAll(@Query() query: FilterCategoriesDto) {
+    return this.categoriesSvc.findAll(query);
   }
 
   @Get(':id')
   get(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.findOne(id);
+    return this.categoriesSvc.findOne(id);
   }
 
   @Post()
   create(@Body() payload: CreateCategoryDto) {
-    return this.categoriesService.create(payload);
+    return this.categoriesSvc.create(payload);
   }
 
   @Put(':id')
@@ -36,11 +38,11 @@ export class CategoriesController {
     @Param('id', ParseIntPipe) id: number,
     @Body() payload: UpdateCategoryDto,
   ) {
-    return this.categoriesService.update(id, payload);
+    return this.categoriesSvc.update(id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.remove(+id);
+    return this.categoriesSvc.remove(+id);
   }
 }
