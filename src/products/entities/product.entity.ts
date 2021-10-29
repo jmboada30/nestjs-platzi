@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -12,6 +13,7 @@ import { Brand } from './brand.entity';
 import { Category } from './category.entity';
 
 @Entity()
+@Index(['price', 'image']) // <-- indices en conjunto
 export class Product extends BaseDate {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,6 +24,7 @@ export class Product extends BaseDate {
   @Column({ type: 'text' })
   description: string;
 
+  @Index() // <-- indice a un solo campo
   @Column({ type: 'int' })
   price: number;
 
@@ -31,7 +34,7 @@ export class Product extends BaseDate {
   @Column({ type: 'varchar' })
   image: string;
 
-  @ManyToOne(() => Brand, (brand) => brand.products) //<- la relacion va en la entidad debil.
+  @ManyToOne(() => Brand, (brand) => brand.products) //<-- la relacion va en la entidad debil.
   brand: Brand;
 
   @ManyToMany(() => Category, (category) => category.products)
