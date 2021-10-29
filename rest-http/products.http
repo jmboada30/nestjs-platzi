@@ -6,7 +6,7 @@
 GET {{APP_URL}}/{{feature}} HTTP/1.1
 
 ### getOne
-GET {{APP_URL}}/{{feature}}/2 HTTP/1.1
+GET {{APP_URL}}/{{feature}}/1 HTTP/1.1
 
 ### Create
 POST {{APP_URL}}/{{feature}} HTTP/1.1
@@ -15,7 +15,7 @@ Content-Type: {{contentType}}
 {
     "name": "Product 2",
     "description": "Description product 2",
-    "price": 100,
+    "price": 200,
     "image": "pagina.com",
     "stock": 2,
     "brandId": 1,
@@ -27,11 +27,8 @@ PUT {{APP_URL}}/{{feature}}/1 HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "name": "Product 10",
-    "description": "Description product 10 updated",
-    "price": 40,
-    "image": "pagina.com/foto.png",
-    "stock": 200
+    "brandId": 1,
+    "categoriesIds": [1,2]
 }
 
 ### Add category by Product

@@ -17,7 +17,7 @@ export class Order extends BaseDate {
   @Column({ type: 'datetime' })
   date: Date;
 
-  @ManyToOne(() => Customer, (customer) => customer.orders)
+  @ManyToOne(() => Customer, (customer) => customer.orders, { nullable: false })
   customer: Customer;
 
   @OneToMany(() => OrderItem, (items) => items.order)

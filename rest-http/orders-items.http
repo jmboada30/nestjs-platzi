@@ -1,0 +1,25 @@
+@APP_URL = {{$dotenv APP_URL}}
+@contentType = application/json
+@feature = order-items
+
+### Create
+POST {{APP_URL}}/{{feature}} HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "quantity": 120,
+    "productId": 1,
+    "orderId": 1
+}
+
+### Update
+PUT {{APP_URL}}/{{feature}}/1 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+    "quantity": 20,
+    "productId": 2
+}
+
+### delete
+DELETE {{APP_URL}}/{{feature}}/3 HTTP/1.1

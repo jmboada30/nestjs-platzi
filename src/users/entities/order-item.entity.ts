@@ -11,9 +11,9 @@ export class OrderItem extends BaseDate {
   @Column({ type: 'int' })
   quantity: number;
 
-  @ManyToOne(() => Order, (order) => order.items)
+  @ManyToOne(() => Order, (order) => order.items, { nullable: false })
   order: Order;
 
-  @ManyToOne(() => Product)
+  @ManyToOne(() => Product, { nullable: false })
   product: Product;
 }
