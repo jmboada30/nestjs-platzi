@@ -12,6 +12,7 @@ import {
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 import { Category } from '../entities/category.entity';
 import { BaseFilterDto } from '../../common/dtos/paginates.dto';
+import { Type } from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
@@ -57,10 +58,12 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {}
 export class FilterProductsDto extends BaseFilterDto {
   @IsOptional()
   @IsPositive()
+  @Type(() => Number)
   minPrice: number;
 
   @ValidateIf((item) => item.minPrice)
   @IsPositive()
+  @Type(() => Number)
   maxPrice: number;
 
   @IsOptional()

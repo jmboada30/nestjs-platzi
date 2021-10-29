@@ -8,7 +8,7 @@ Content-Type: {{contentType}}
 
 {
     "quantity": 120,
-    "productId": 1,
+    "productId": 4,
     "orderId": 1
 }
 

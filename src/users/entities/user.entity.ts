@@ -5,11 +5,12 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { BaseDate } from '../../common/entities/base-date.entity';
+import { BaseDateTime } from '../../common/entities/base-date.entity';
 import { Customer } from './customer.entity';
+import { Exclude, classToPlain } from 'class-transformer';
 
-@Entity()
-export class User extends BaseDate {
+@Entity({ name: 'users' })
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,12 +18,20 @@ export class User extends BaseDate {
   email: string;
 
   @Column({ type: 'varchar', select: false })
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @Column({ type: 'varchar' })
   role: string;
 
+  @Column(() => BaseDateTime, { prefix: false })
+  timestamp: BaseDateTime;
+
   @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
-  @JoinColumn()
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
+
+  toJSON() {
+    return classToPlain(this);
+  }
 }

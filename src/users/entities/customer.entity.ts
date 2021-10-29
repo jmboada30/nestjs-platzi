@@ -5,23 +5,26 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { BaseDate } from '../../common/entities/base-date.entity';
+import { BaseDateTime } from '../../common/entities/base-date.entity';
 import { User } from './user.entity';
 import { Order } from './order.entity';
 
-@Entity()
-export class Customer extends BaseDate {
+@Entity({ name: 'customers' })
+export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar' })
-  name: string;
+  @Column({ type: 'varchar', name: 'first_name' })
+  firstName: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', name: 'last_name' })
   lastName: string;
 
   @Column({ type: 'varchar' })
   phone: string;
+
+  @Column(() => BaseDateTime, { prefix: false })
+  timestamp: BaseDateTime;
 
   @OneToOne(() => User, (user) => user.customer, { nullable: true })
   user: User;
