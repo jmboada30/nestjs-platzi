@@ -7,6 +7,7 @@ import {
   IsArray,
   IsOptional,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { PartialType, ApiProperty } from '@nestjs/swagger';
 import { Category } from '../entities/category.entity';
@@ -53,4 +54,16 @@ export class CreateProductDto {
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {}
 
-export class FilterProductsDto extends BaseFilterDto {}
+export class FilterProductsDto extends BaseFilterDto {
+  @IsOptional()
+  @IsPositive()
+  minPrice: number;
+
+  @ValidateIf((item) => item.minPrice)
+  @IsPositive()
+  maxPrice: number;
+
+  @IsOptional()
+  @IsString()
+  like: string;
+}

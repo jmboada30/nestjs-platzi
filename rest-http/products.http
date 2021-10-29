@@ -2,8 +2,8 @@
 @contentType = application/json
 @feature = products
 
-### getAll
-GET {{APP_URL}}/{{feature}}?limit=3&offset=0 HTTP/1.1
+### getAll -- query opt = ?limit=2&offset=0&minPrice=200&maxPrice=200&like=product
+GET {{APP_URL}}/{{feature}}?like=5 HTTP/1.1
 
 ### getOne
 GET {{APP_URL}}/{{feature}}/1 HTTP/1.1
