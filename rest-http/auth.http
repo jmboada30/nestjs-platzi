@@ -1,0 +1,10 @@
+
+
+### Por defecto
+POST {{APP_URL}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "customer@mail.com",
+  "password": "121212"
+}
