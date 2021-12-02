@@ -3,6 +3,7 @@
 ### Por defecto
 GET {{APP_URL}} HTTP/1.1
 Content-Type: application/json
+Auth: ABC123
 
 ### Nuevo
 GET {{APP_URL}}/nuevo HTTP/1.1
