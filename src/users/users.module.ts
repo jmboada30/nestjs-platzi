@@ -30,5 +30,6 @@ import { OrderItemsController } from './controllers/order-items.controller';
     OrderItemsController,
   ],
   providers: [CustomersService, UsersService, OrdersService, OrderItemService],
+  exports: [UsersService],
 })
 export class UsersModule {}

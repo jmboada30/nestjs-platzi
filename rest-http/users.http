@@ -16,7 +16,7 @@ Content-Type: {{contentType}}
     "email": "customer@mail.com",
     "password": "121212",
     "role": "customer",
-    "customerId": 2
+    "customerId": 1
 }
 
 ### Update
