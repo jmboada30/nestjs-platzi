@@ -1,0 +1,11 @@
+
+
+### Nuevo
+GET {{APP_URL}}/nuevo HTTP/1.1
+Content-Type: application/json
+Auth: 1234
+
+### Ruta
+GET {{APP_URL}}/ruta HTTP/1.1
+Content-Type: application/json
+Auth: 1234
