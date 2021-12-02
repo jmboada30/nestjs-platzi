@@ -14,7 +14,7 @@ const API_KEY_PROD = 'PROD1212121SA';
       useFactory: (configService: ConfigType<typeof config>) => {
         const { user, ...mysql } = configService.mysql;
         return {
-          type: 'mysql',
+          type: 'mariadb',
           ...mysql,
           username: user,
           autoLoadEntities: true,

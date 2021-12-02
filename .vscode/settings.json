@@ -1,0 +1,21 @@
+{
+    "files.autoSave": "onFocusChange",
+    "rest-client.environmentVariables": {
+      "$shared": {
+          "version": "v1",
+          "prodToken": "foo",
+          "nonProdToken": "bar",
+          "APP_URL": "http://localhost:3000",
+      },
+      "local": {
+        "APP_URL": "http://localhost:3000",
+          "token": "{{$shared nonProdToken}}",
+          "secretKey": "devSecret"
+      },
+      "production": {
+          "APP_URL": "http://localhost:3000",
+          "token": "{{$shared prodToken}}",
+          "secretKey" : "prodSecret"
+      }
+  }
+}

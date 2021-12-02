@@ -16,6 +16,16 @@ const configSchema = Joi.object({
   MYSQL_PASSWORD: Joi.string().required(),
   MYSQL_PORT: Joi.number().required(),
   MYSQL_HOST: Joi.string().hostname().required(),
+
+  TYPEORM_CONNECTION: Joi.string().required(),
+  TYPEORM_HOST: Joi.string().required(),
+  TYPEORM_USERNAME: Joi.string().required(),
+  TYPEORM_PASSWORD: Joi.string().required(),
+  TYPEORM_DATABASE: Joi.string().required(),
+  TYPEORM_PORT: Joi.number().required(),
+  TYPEORM_SYNCHRONIZE: Joi.string().required(),
+  TYPEORM_LOGGING: Joi.bool().required(),
+  TYPEORM_ENTITIES: Joi.string().required(),
 });
 
 export default configSchema;
